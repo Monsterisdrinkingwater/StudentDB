@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 
 APP_NAME="学生信息管理系统"
 BUNDLE_ID="com.monsterisdrinkingwater.studentdb"
-VERSION="3.0.67"
+VERSION="3.0.68"
 APP_DIR="build/$APP_NAME.app"
 
 echo "==> 编译 (release)..."

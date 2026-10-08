@@ -75,18 +75,18 @@ final class CreditPointTests: XCTestCase {
         XCTAssertEqual(byName["参加江阴市级比赛"], 3)
         XCTAssertEqual(byName["参加无锡市级比赛"], 4)
         XCTAssertEqual(byName["参加省级比赛"], 5)
-        // 获奖（新递进：奖次差 3，层间差 4；市级单项最高 20、省级最高 30 为锚点）
-        XCTAssertEqual(byName["校级比赛三等奖"], 6)
-        XCTAssertEqual(byName["校级比赛二等奖"], 9)
-        XCTAssertEqual(byName["校级比赛一等奖"], 12)
-        XCTAssertEqual(byName["江阴市级比赛三等奖"], 10)
-        XCTAssertEqual(byName["江阴市级比赛二等奖"], 13)
-        XCTAssertEqual(byName["江阴市级比赛一等奖"], 16)
-        XCTAssertEqual(byName["无锡市级比赛三等奖"], 14)
-        XCTAssertEqual(byName["无锡市级比赛二等奖"], 17)
+        // 获奖（错档相等：县一=市二=10、市一=省二=20、省一=国二=30；三等奖独立小步）
+        XCTAssertEqual(byName["校级比赛三等奖"], 2)
+        XCTAssertEqual(byName["校级比赛二等奖"], 4)
+        XCTAssertEqual(byName["校级比赛一等奖"], 6)
+        XCTAssertEqual(byName["江阴市级比赛三等奖"], 3)
+        XCTAssertEqual(byName["江阴市级比赛二等奖"], 6)
+        XCTAssertEqual(byName["江阴市级比赛一等奖"], 10)
+        XCTAssertEqual(byName["无锡市级比赛三等奖"], 4)
+        XCTAssertEqual(byName["无锡市级比赛二等奖"], 10)
         XCTAssertEqual(byName["无锡市级比赛一等奖"], 20)
-        XCTAssertEqual(byName["省级比赛三等奖"], 24)
-        XCTAssertEqual(byName["省级比赛二等奖"], 27)
+        XCTAssertEqual(byName["省级比赛三等奖"], 10)
+        XCTAssertEqual(byName["省级比赛二等奖"], 20)
         XCTAssertEqual(byName["省级比赛一等奖"], 30)
         // 三组齐全、固定 UUID（重复构造结果稳定）
         XCTAssertEqual(Set(rules.map(\.category)), Set(CreditRule.categories))
@@ -398,9 +398,9 @@ final class CreditPointTests: XCTestCase {
             ("常规抽查（校级）（红色等级）", -4),
             ("处分（记过）", -40),
             ("文化课成绩（及格 +2/门，不及格 -2/门）", 2),
-            ("技能竞赛获奖（国家级一等奖）", 34),
-            ("体育比赛获奖（市级二等奖）", 17),
-            ("艺术类竞赛获奖（省级三等奖）", 24),
+            ("技能竞赛获奖（国家级一等奖）", 40),
+            ("体育比赛获奖（市级二等奖）", 10),
+            ("艺术类竞赛获奖（省级三等奖）", 10),
             ("参与勤工俭学", 10),
         ]
         let byName = Dictionary(uniqueKeysWithValues: rules.map { ($0.name, $0.points) })
