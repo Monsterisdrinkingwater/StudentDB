@@ -1,0 +1,69 @@
+name: StudentDBiOS
+options:
+  bundleIdPrefix: com.monsterisdrinkingwater
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+
+targets:
+  StudentDBiOS:
+    type: application
+    platform: iOS
+    sources:
+      # iOS 应用骨架 + 学生模块 + 数据表模块（三个模块编进同一 target，
+      # internal 符号互通：IOSPlatformServices 可被共享层 AppModel 注入）
+      - path: StudentDBiOS
+      # 共享数据层成员文件（口径见 ios/README-BUILD.md 第 2 节）：
+      # - Models 全部（纯 Foundation）
+      # - Store 全部（含 AppModel/ProjectStore/TableImporter 等，已做 #if os(macOS) 补丁）
+      # - Views 仅 LockScreenView.swift（纯 SwiftUI）
+      # 不加入：App/StudentDBApp.swift（macOS @main + AppKit）、Views 其余文件（AppKit）
+      - path: ../Sources/StudentDB/Models
+      - path: ../Sources/StudentDB/Store
+      - path: ../Sources/StudentDB/Views/LockScreenView.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.monsterisdrinkingwater.studentdb.ios
+        TARGETED_DEVICE_FAMILY: "1,2"
+        INFOPLIST_FILE: StudentDBiOS/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+    info:
+      path: StudentDBiOS/Info.plist
+      properties:
+        CFBundleDisplayName: 学生信息管理系统
+        CFBundleExecutable: $(EXECUTABLE_NAME)
+        CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
+        CFBundleName: $(PRODUCT_NAME)
+        CFBundlePackageType: APPL
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        LSRequiresIPhoneOS: true
+        UILaunchScreen: {}
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        CFBundleDocumentTypes:
+          - CFBundleTypeName: 学生信息项目
+            LSHandlerRank: Owner
+            LSItemContentTypes: [com.monsterisdrinkingwater.studentdb.project]
+        UTImportedTypeDeclarations:
+          - UTTypeIdentifier: com.monsterisdrinkingwater.studentdb.project
+            UTTypeDescription: 学生信息项目
+            UTTypeConformsTo: [com.apple.package]
+            UTTypeTagSpecification:
+              public.filename-extension: [studentproj]
+
+schemes:
+  StudentDBiOS:
+    build:
+      targets:
+        StudentDBiOS: all
+    run:
+      config: Debug

@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+
+# ZCode 会话与视频制作环境（本地工具，与项目无关）
+.zcode/
+.video_agent/
+
+# 视频输出成品（体积大，走网盘或 Gitee 发行版附件分发）
+out/
+
+# Swift Package Manager 构建缓存与 app 产物
+StudentDB/.build/
+StudentDB/build/
+
+# Xcode / Swift Playgrounds 用户本机状态
+xcuserdata/
+*.xcuserstate
+.swiftpm/
+
+# 历史遗留的自引用符号链接
+StudentDB/StudentDB
+
+# ===== 比赛材料（不上传）=====
+学生信息管理系统-开发应用报告.pdf
+比赛截图/
+测试导入文件/
